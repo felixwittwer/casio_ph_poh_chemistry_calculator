@@ -19,6 +19,7 @@ Press [MENU] as shown on the screen.<br>
 ## Use
 Start the prgramm by going into the PROG menu. Search for "pH   :2728" and press [EXE] <br>
 ![Menu](/screenshots/menu.bmp) <br>
+![Submenu](/screenshots/phmenu.bmp) <br>
 main menu with all subprograms
 1. pH / pOH
 2. Konzentration
