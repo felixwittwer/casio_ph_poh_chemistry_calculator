@@ -1,0 +1,81 @@
+#Program name: pH
+#Password: FW
+Lbl 0
+ClrText : Menu "pH pOH Berechnungen", "pH  pOH", 1, "Konzentration", 2, "Masse", 3, "Information", I, "Beenden", E
+'from here on pH calculations
+Lbl 1
+"für pH (1)           für pOH (2) "? -> S
+ClrText
+f S = 1 : Then Menu "pH Berechnungen", "aus c", 4, "aus m, M und V", 5, "aus n und V", 6, "aus pOH", 7, "Zurück", 0 : Else 
+	Menu "pOH Berechnungen", "aus c", 4, "aus m, M und V", 5, "aus n und V", 6, "aus pH", 7, "Zurück", 0 : IfEnd
+Lbl 4
+"c Konzentration moll"? -> C : ClrText
+ - log (C) -> P
+f S = 1 : Then Locate 1, 2, "pH-Wert" : Locate 1, 5, "pH = -lg(c)" : Locate 1, 6, "pH =" : Locate 6, 6, P : Else 
+	Locate 1, 2, "pOH-Wert" : Locate 1, 5, "pOH = -lg(c)" : Locate 1, 6, "pOH =" : Locate 7, 6, P : IfEnd
+Locate 1, 4, "c =" : Locate 11, 4, C◢
+Goto 0
+Lbl 5
+"m Masse in g"? -> G : "M Molare Masse"? -> M : "V Volumen in l"? -> V : ClrText
+ - log ((G / M) / V) -> P
+f S = 1 : Then Locate 1, 5, "pH = -lg((mM)V)" : Locate 1, 6, "pH =" : Locate 6, 6, P : Else 
+	Locate 1, 5, "pOH = -lg((mM)V)" : Locate 1, 6, "pOH =" : Locate 7, 6, P : IfEnd
+Locate 1, 2, "m =" : Locate 5, 2, G : Locate 1, 3, "M =" : Locate 5, 3, M : Locate 1, 4, "V =" : Locate 5, 4, V◢
+Goto 0
+Lbl 6
+"n Stoffmenge mol"? -> N : "V Volumen in l"? -> V : ClrText
+ - log (N / V) -> P
+f S = 1 : Then Locate 1, 2, "pH-Wert" : Locate 1, 5, "pH = -lg(NV)" : Locate 1, 6, "pH =" : Locate 6, 6, P : Else 
+	Locate 1, 2, "pOH-Wert" : Locate 1, 5, "pOH = -lg(NV)" : Locate 1, 6, "pOH =" : Locate 7, 6, P : IfEnd
+Locate 1, 3, "n=" : Locate 3, 3, M : Locate 1, 4, "V=" : Locate 3, 4, V◢
+Goto 0
+Lbl 7
+f S = 1 : Then "pOH-Wert"? -> O : ClrText : Locate 1, 2, "pH-Wert" : Locate 1, 4, "pOH =" : Locate 7, 4, O : Locate 1, 5, "pH = 14-pOH" : Else 
+	"pH-Wert"? -> O : ClrText : Locate 1, 2, "pOH-Wert" : Locate 1, 4, "pH =" : Locate 6, 4, O : Locate 1, 5, "pOH = 14-pH" : IfEnd
+14 - O -> P
+f S = 1 : Then Locate 1, 6, "pH =" : Locate 6, 6, P : Else 
+	Locate 1, 6, "pOH =" : Locate 7, 6, P : IfEnd◢
+Goto 0
+'from here on conzentration calculations
+Lbl 2
+"aus pH (1)           aus pOH (2) "? -> S
+ClrText
+f S = 1 : Then Menu "Konzentration", "aus pH", 8, "aus n und V", 9, "Zurück", 0 : Else 
+	Menu "Konzentration", "aus pOH", 8, "aus n und V", 9, "Zurück", 0 : IfEnd
+Lbl 8
+f S = 1 : Then "pH-Wert"? -> P : ClrText : Else 
+	"pOH-Wert"? -> P : ClrText : IfEnd
+10 ^ -(P) -> C
+f S = 1 : Then Locate 1, 3, "pH =" : Locate 6, 3, P : Locate 1, 5, "c = 10^-(pH)" : Else 
+	Locate 1, 3, "pOH =" : Locate 7, 3, P : Locate 1, 5, "c = 10^-(pOH)" : IfEnd
+Locate 1, 2, "Konzentration" : Locate 1, 6, "c =" : Locate 5, 6, C : Locate 14, 6, "moll"◢
+Goto 0
+Lbl 9
+"n Stoffmenge mol"? -> N : "V Volumen in l"? -> V : ClrText
+N / V -> C
+Locate 1, 2, "Konzentration" : Locate 1, 3, "n =" : Locate 5, 3, N : Locate 1, 4, "V =" : Locate 5, 4, V : Locate 1, 5, "c = nV" : Locate 1, 6, "c =" : Locate 5, 6, C : Locate 14, 6, "moll"◢
+Goto 0
+'from here on mass calculations
+Lbl 3
+"mit pH (1)           mit pOH (2) "? -> S
+ClrText
+f S = 1 : Then Menu "Masse", "aus pH, M und V", A, "aus ρ und V", B, "Zurück", 0 : Else 
+	Menu "Masse", "aus pOH, M und V", A, "aus ρ und V", B, "Zurück", 0 : IfEnd
+Lbl A
+f S = 1 : Then "pH"? -> P : "M Molare Masse gmol"? -> M : "V Volumen in l"? -> V : ClrText : Else 
+	"pOH"? -> P : "M Molare Masse gmol"? -> M : "V Volumen in l"? -> V : ClrText : IfEnd
+10 ^ -(P) * M * V -> G
+f S = 1 : Then Locate 1, 2, "pH =" : Locate 6, 2, P : Locate 1, 5, "m = 10^-(pH)*M*V" : Else 
+	Locate 1, 2, "pOH =" : Locate 7, 2, P : Locate 1, 5, "m = 10^-(pOH)*M*V" : IfEnd
+Locate 1, 3, "M =" : Locate 5, 3, M : Locate 1, 4, "V =" : Locate 5, 4, V : Locate 1, 6, "m =" : Locate 5, 6, G : Locate 18, 6, "g"◢
+Goto 0
+Lbl B
+"ρ Dichte gl"? -> D : "V Volumen in l"? -> V : ClrText
+D * V -> G
+Locate 1, 2, "Masse" : Locate 1, 3, "m =" : Locate 5, 3, N : Locate 1, 4, "V =" : Locate 5, 4, V : Locate 1, 5, "m = ρ*V" : Locate 1, 6, "m =" : Locate 5, 6, G : Locate 18, 6, "g"◢
+Goto 0
+Lbl I
+Locate 8, 2, "V 1.0" : Locate 4, 3, "Felix Wittwer" : Locate 2, 5, "https:github.com" : Locate 8, 6, "felixwittwer"◢
+Goto 0
+Lbl E
+Stop
